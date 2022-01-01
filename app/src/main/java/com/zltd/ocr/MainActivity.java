@@ -208,9 +208,17 @@ public class MainActivity extends AppCompatActivity {
         for (String str : lines) {
             Log.d(TAG, "result values= " + str);
             if (TextUtils.isEmpty(str) || !str.contains(":") || !str.contains(" ")) continue;
-            if (str.startsWith("09")) {
+            if (str.startsWith("09")||str.contains("-")) {
                 String tmp[] = str.trim().split(" ");
-                String time[] = tmp[0].trim().split(":");
+                if(tmp.length < 2)continue;
+                String HourMin = null;
+                if(tmp[0].contains("-")) {
+                    HourMin = tmp[1];
+                }else {
+                    HourMin = tmp[0];
+                }
+                if(!HourMin.startsWith("09")) continue;
+                String time[] = HourMin.trim().split(":");
                 if (TextUtils.isDigitsOnly(time[1])) {
                     int min = Integer.valueOf(time[1]);
                     summary += min;
